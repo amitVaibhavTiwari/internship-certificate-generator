@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { useParams, useSearchParams } from 'react-router-dom'
 import yaml from 'js-yaml'
 import Navbar from '../components/Navbar'
 import CertificatePreview from '../components/CertificatePreview'
@@ -90,7 +90,6 @@ footer:
 `
 
 function Editor() {
-  const navigate = useNavigate()
   const { templateId } = useParams<{ templateId: string }>()
   const [searchParams] = useSearchParams()
   const workId = searchParams.get('workId')
@@ -103,7 +102,9 @@ function Editor() {
   const [currentWorkId, setCurrentWorkId] = useState<string | null>(workId)
   const [certificateName, setCertificateName] = useState('')
   const [showSaveDialog, setShowSaveDialog] = useState(false)
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
 
+  // Auto-save on first load if no workId exists
   useEffect(() => {
     if (workId) {
       const work = getWorkById(workId)
@@ -112,17 +113,66 @@ function Editor() {
         setCertificateName(work.name)
         setCurrentWorkId(work.id)
       }
+    } else if (templateId && !currentWorkId) {
+      // Auto-save new work with default name
+      const timestamp = new Date().toLocaleString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      })
+      const defaultName = `Certificate - ${timestamp}`
+      const work = saveWork({
+        templateId,
+        name: defaultName,
+        yamlContent: defaultYaml
+      })
+      setCurrentWorkId(work.id)
+      setCertificateName(defaultName)
+      setHasUnsavedChanges(false)
     }
-  }, [workId])
+  }, [workId, templateId, currentWorkId])
+
+  // Warn before leaving page with unsaved changes
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (hasUnsavedChanges) {
+        e.preventDefault()
+        e.returnValue = ''
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeUnload)
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+  }, [hasUnsavedChanges])
+
+  // Prompt to save when navigating away
+  useEffect(() => {
+    const handlePopState = () => {
+      if (hasUnsavedChanges && !window.confirm('You have unsaved changes. Do you want to leave without saving?')) {
+        window.history.pushState(null, '', window.location.href)
+      }
+    }
+
+    window.history.pushState(null, '', window.location.href)
+    window.addEventListener('popstate', handlePopState)
+
+    return () => {
+      window.removeEventListener('popstate', handlePopState)
+    }
+  }, [hasUnsavedChanges])
 
   useEffect(() => {
     parseYaml(yamlContent)
   }, [yamlContent])
 
   useEffect(() => {
+    setHasUnsavedChanges(true)
     const autoSave = setTimeout(() => {
       if (currentWorkId && parsedData) {
         updateWork(currentWorkId, { yamlContent, name: certificateName || 'Untitled Certificate' })
+        setHasUnsavedChanges(false)
       }
     }, 2000)
     return () => clearTimeout(autoSave)
@@ -159,13 +209,19 @@ function Editor() {
   }
 
   const handleSave = () => {
-    if (!currentWorkId) {
-      setShowSaveDialog(true)
-    }
+    setShowSaveDialog(true)
   }
 
   const handleSaveConfirm = () => {
-    if (templateId) {
+    if (currentWorkId) {
+      updateWork(currentWorkId, {
+        yamlContent,
+        name: certificateName || 'Untitled Certificate'
+      })
+      setShowSaveDialog(false)
+      setHasUnsavedChanges(false)
+      alert('Certificate name updated successfully!')
+    } else if (templateId) {
       const work = saveWork({
         templateId,
         name: certificateName || 'Untitled Certificate',
@@ -173,6 +229,7 @@ function Editor() {
       })
       setCurrentWorkId(work.id)
       setShowSaveDialog(false)
+      setHasUnsavedChanges(false)
       alert('Certificate saved successfully!')
     }
   }
@@ -201,11 +258,11 @@ function Editor() {
                 </button>
               </div>
               <button
-                className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
-                           hover:bg-gray-100 transition-colors shadow-md"
+                className={`px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
+                           hover:bg-gray-100 transition-colors shadow-md ${hasUnsavedChanges ? 'animate-pulse' : ''}`}
                 onClick={handleSave}
               >
-                {currentWorkId ? '✓ Saved' : 'Save'}
+                {hasUnsavedChanges ? 'Saving...' : currentWorkId ? '✓ Auto-saved' : 'Save'}
               </button>
               <button
                 className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
@@ -273,7 +330,12 @@ function Editor() {
       {showSaveDialog && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-neutral-800 rounded p-6 max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">Save Certificate</h2>
+            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+              {currentWorkId ? 'Rename Certificate' : 'Save Certificate'}
+            </h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+              {currentWorkId ? 'Update the name of your certificate' : 'Give your certificate a name'}
+            </p>
             <input
               type="text"
               value={certificateName}
@@ -281,6 +343,7 @@ function Editor() {
               placeholder="Enter certificate name"
               className="w-full px-4 py-2 border border-gray-300 dark:border-neutral-600 rounded mb-4 
                          bg-white dark:bg-neutral-900 text-gray-900 dark:text-white"
+              autoFocus
             />
             <div className="flex gap-3 justify-end">
               <button
