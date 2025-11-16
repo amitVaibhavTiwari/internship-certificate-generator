@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { getSavedWorks, deleteWork, SavedWork } from '../utils/localStorage'
-import { FileText, Plus } from 'lucide-react'
 
 function MyWork() {
   const navigate = useNavigate()

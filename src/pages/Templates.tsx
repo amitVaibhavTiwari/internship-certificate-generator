@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { Template } from '../types'
-import { FileText } from 'lucide-react'
 
 function Templates() {
   const navigate = useNavigate()

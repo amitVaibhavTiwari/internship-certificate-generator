@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import FAQ from '../components/FAQ'
-import {  Zap, PenTool, Save } from 'lucide-react'
 
 function Home() {
     const navigate = useNavigate()
@@ -84,7 +83,7 @@ function Home() {
 
             <FAQ />
 
-            
+
         </div>
     )
 }
