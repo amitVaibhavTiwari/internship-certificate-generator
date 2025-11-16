@@ -7,7 +7,7 @@ interface CertificatePreviewProps {
 
 function CertificatePreview({ data }: CertificatePreviewProps) {
   return (
-    <div 
+    <div
       id="certificate-preview"
       className="bg-white w-[210mm] h-[297mm] shadow-2xl relative"
       style={{ fontFamily: 'Times New Roman, serif' }}
@@ -59,24 +59,16 @@ function CertificatePreview({ data }: CertificatePreviewProps) {
         </div>
 
         {/* Salutation */}
-        <p className="text-black text-sm mb-5">{data.salutation}</p>
+        <p className="text-black text-sm mb-5 font-semibold">{data.salutation}</p>
 
         {/* Introduction */}
         <p className="text-black text-sm mb-5 leading-relaxed">
-          {data.intro.text} <strong>{data.intro.internName}</strong>, has successfully completed the internship program at {data.intro.companyName} from <strong>{data.intro.startDate}</strong>, to <strong>{data.intro.endDate}</strong>.
+          {data.intro.text} <strong>{data.intro.internName}</strong> has served as a <strong>{data.intro.position}</strong> at {data.intro.companyName} from <strong>{data.intro.startDate}</strong> to <strong>{data.intro.endDate}</strong>.
         </p>
 
         {/* Project Section */}
-        <p className="text-black text-sm mb-4 leading-relaxed">
-          {data.project.heading} Project Name: <strong>{data.project.name}</strong>
-        </p>
-
-        <p className="text-black text-sm mb-4 leading-relaxed">
-          {data.project.description}
-        </p>
-
-        <p className="text-black text-sm mb-4 leading-relaxed">
-          {data.project.datasetDescription}
+        <p className="text-black text-sm mb-5 leading-relaxed">
+          {data.project.heading}
         </p>
 
         {/* Tasks Section */}
@@ -93,16 +85,22 @@ function CertificatePreview({ data }: CertificatePreviewProps) {
         </p>
 
         {/* Closing */}
-        <p className="text-black text-sm mb-8">{data.closing}</p>
+        <p className="text-black text-sm mb-5">{data.closing}</p>
+
+        {/* Character Reference */}
+        <p className="text-black text-sm mb-5 leading-relaxed">{data.character.text}</p>
+
+        {/* Wishes */}
+        <p className="text-black text-sm mb-6">{data.wishes}</p>
 
         {/* Signature Section */}
-        <div className="mb-6 w-fit">
-          <p className="text-black text-sm mb-4">{data.signatory.closing}</p>
+        <div className="mb-4 w-fit">
+          <p className="text-black text-sm mb-1">{data.signatory.closing}</p>
           {data.signatory.signature && (
-            <img 
-              src={data.signatory.signature} 
-              alt="Signature" 
-              className="h-12 mb-2 max-w-[200px]"
+            <img
+              src={data.signatory.signature}
+              alt="Signature"
+              className="h-12 mb-1 max-w-[200px]"
             />
           )}
           <p className="text-black text-sm font-normal">{data.signatory.name}</p>

@@ -27,61 +27,66 @@ const generateDefaultSignature = (name: string): string => {
   return ''
 }
 
-const defaultSignature = generateDefaultSignature('Sarah Johnson')
+const defaultSignature = generateDefaultSignature('Ava Tyagi')
 
 const defaultYaml = `# Certificate Configuration
 company:
   name: "Pied Piper"
   logo: ""  # Add company logo URL (optional)
   address: "Tech Tower, Sector 62, Noida 201301"
-  email: "hr@techcorp.com"
+  email: "contact@piedpiper.com"
   phone: "+91 120-4567890"
 
-date: "December 15, 2024"
+date: "November 3, 2025"
 
 certificate:
   title: "CERTIFICATE FOR INTERNSHIP"
 
-salutation: "To Whom It May Concern:"
+salutation: "To Whomsoever It May Concern,"
 
 intro:
   text: "This is to certify that"
-  internName: "John Doe"
+  internName: "Jesse Pinkman"
+  position: "Frontend Developer Intern"
   companyName: "Pied Piper"
-  startDate: "June 1, 2024"
-  endDate: "December 15, 2024"
+  startDate: "May 1, 2025"
+  endDate: "October 31, 2025"
 
 project:
-  heading: "During the Internship program John Doe has worked on the below Project and Tasks."
-  name: "E-Commerce Platform Development"
-  description: "Developed a full-stack e-commerce web application with modern UI/UX design, implementing responsive layouts, dynamic product catalogs, and shopping cart functionality using React and Next.js."
-  datasetDescription: "Project scope: Multi-page responsive web application with user authentication and product management system."
+  heading: "During the tenure of internship, Jesse Pinkman actively contributed to multiple projects at Pied Piper and demonstrated strong learning ability, adaptability, and a wide range of talents that added value to the team."
+  name: ""
+  description: ""
+  datasetDescription: ""
 
 tasks:
-  heading: "Tasks performed by the intern:"
+  heading: "Key responsibilities included:"
   items:
-    - "Designed and implemented responsive UI components using React and Tailwind CSS"
-    - "Built server-side rendered pages and API routes using Next.js framework"
-    - "Integrated RESTful APIs for product catalog and user management"
-    - "Implemented state management using React Context API and custom hooks"
-    - "Created reusable component library following atomic design principles"
+    - "Designed and implemented responsive UI components"
+    - "Built server-side rendered pages and API routes"
+    - "Integrated RESTful APIs for product management"
+    - "Collaborated with the team on code reviews and testing"
 
 techStack:
   heading: "Tech Stack used"
-  text: "React 18, Next.js 14, TypeScript, Tailwind CSS, Node.js, and Git"
+  text: "React, Next.js, TypeScript, Tailwind CSS, and Node.js"
 
-closing: "We wish them all the best for their future endeavours."
+closing: ""
+
+character:
+  text: "He is amiable in nature and his character is commendable. We have no objection to him pursuing any better position and he has no liabilities with our company."
+
+wishes: "We wish him success in all his future endeavours."
 
 signatory:
   closing: "Sincerely,"
   signature: "${defaultSignature}"
-  name: "Sarah Johnson"
-  title: "Chief Technology Officer"
+  name: "Ava Tyagi"
+  title: "Vice President – Human Resources"
 
 footer:
-  line1: "TechCorp Solutions Pvt Ltd | Tech Tower, 10th Floor, Building No.29 | Sector 62, Noida Technology Park | Noida 201301, Uttar Pradesh | India"
-  line2: "+91 120-4567890 | Fax +91 120-4567891 | www.techcorp.com | careers@techcorp.com"
-  line3: "CIN: U72200UP2015PTC065432 | HR Department: hr@techcorp.com | Engineering: engineering@techcorp.com"
+  line1: "Pied Piper Private Limited | Tech Tower, 10th Floor, Building No.29 | Sector 62, Noida Technology Park | Noida 201301, Uttar Pradesh | India"
+  line2: "+91 9204567890 | Fax +91 120-4567891 | www.piedpiper.com | careers@piedpiper.com"
+  line3: "CIN: U72200UP2015PTC0611112 | contact@piedpiper.com"
 `
 
 function Editor() {

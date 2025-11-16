@@ -14,6 +14,7 @@ export interface CertificateData {
   intro: {
     text: string
     internName: string
+    position: string
     companyName: string
     startDate: string
     endDate: string
@@ -33,6 +34,10 @@ export interface CertificateData {
     text: string
   }
   closing: string
+  character: {
+    text: string
+  }
+  wishes: string
   signatory: {
     closing: string
     signature?: string
