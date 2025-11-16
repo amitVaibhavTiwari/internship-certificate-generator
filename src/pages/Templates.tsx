@@ -27,17 +27,21 @@ function Templates() {
             <div
               key={template.id}
               className="bg-white dark:bg-neutral-800 border border-gray-200 dark:border-neutral-700 
-                         rounded p-6 cursor-pointer transition-all duration-300 
+                         rounded overflow-hidden cursor-pointer transition-all duration-300 
                          hover:shadow-2xl hover:border-red-500 shadow-lg"
               onClick={() => navigate(`/editor/${template.id}`)}
             >
-              <div className="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 
-                              dark:from-neutral-700 dark:to-neutral-600 rounded flex items-center 
-                              justify-center mb-4 border-2 border-gray-200 dark:border-neutral-600">
-                <FileText className="w-20 h-20 text-red-600" />
+              <div className="w-full h-64 bg-gray-100 dark:bg-neutral-700 flex items-center justify-center overflow-hidden">
+                <img 
+                  src="/template_preview/template_1.png" 
+                  alt={template.name}
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <h3 className="text-gray-900 dark:text-white text-xl font-bold mb-2">{template.name}</h3>
-              <p className="text-gray-600 dark:text-gray-400 text-sm">{template.description}</p>
+              <div className="p-6">
+                <h3 className="text-gray-900 dark:text-white text-xl font-bold mb-2">{template.name}</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">{template.description}</p>
+              </div>
             </div>
           ))}
         </div>
