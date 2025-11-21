@@ -25,7 +25,7 @@ function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps
       <div className="px-16 pt-12 pb-20">
         {/* Header with Logo and Contact Info */}
         <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-3">
+          <div className="flex items-end gap-3">
             {data.company.logo ? (
               <img src={data.company.logo} alt="Company Logo" className="h-16 object-contain" />
             ) : (
@@ -43,7 +43,9 @@ function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps
                   </div>
                 </div>
                 <div>
-                  <span className="text-3xl font-bold text-black tracking-wide block leading-tight">{data.company.name}</span>
+                  <span 
+                    style={{ marginTop: isPdfMode ? '-17px' : '14px' }}
+                  className="text-3xl font-bold text-black tracking-wide block leading-tight">{data.company.name}</span>
                 </div>
               </div>
             )}
@@ -61,7 +63,9 @@ function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps
         {/* Certificate Title */}
         <div className="mb-10">
           <div className="border-t-2 border-b-2 border-red-600">
-            <div className="text-center mt-1 text-black text-lg font-bold tracking-wide uppercase leading-[2.5rem]">
+            <div
+              style={{ margin: isPdfMode ? '0px 0 18px 0' : '8px 0 8px 0' }}
+            className="text-center text-black text-lg font-bold tracking-wide uppercase">
               {data.certificate.title}
             </div>
           </div>
