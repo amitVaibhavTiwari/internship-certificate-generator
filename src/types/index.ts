@@ -6,6 +6,7 @@ export interface CertificateData {
     email: string
     phone: string
   }
+  themeColor?: string
   date: string
   certificate: {
     title: string
@@ -27,7 +28,10 @@ export interface CertificateData {
   }
   tasks: {
     heading: string
-    items: string[]
+    items: Array<{
+      number: string
+      text: string
+    }>
   }
   techStack: {
     heading: string

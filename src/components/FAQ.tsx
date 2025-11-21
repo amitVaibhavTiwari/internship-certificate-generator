@@ -21,7 +21,7 @@ function FAQItem({ question, answer }: FAQItemProps) {
         </span>
       </button>
       {isOpen && (
-        <div className="px-6 py-4 bg-gray-50 dark:bg-neutral-900 text-gray-700 dark:text-gray-300">
+        <div className="px-6 py-4 bg-gray-50 text-sm dark:bg-neutral-900 text-gray-700 dark:text-gray-300">
           {answer.split('\n\n').map((paragraph, idx) => (
             <p key={idx} className={idx > 0 ? 'mt-4' : ''}>
               {paragraph}

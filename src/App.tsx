@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Templates from './pages/Templates'
 import Editor from './pages/Editor'
 import MyWork from './pages/MyWork'
+import HowToUse from './pages/HowToUse'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/templates" element={<Templates />} />
           <Route path="/editor/:templateId" element={<Editor />} />
           <Route path="/my-work" element={<MyWork />} />
+          <Route path="/how-to-use" element={<HowToUse />} />
         </Routes>
       </Router>
     </ThemeProvider>

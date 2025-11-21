@@ -4,15 +4,16 @@ import yaml from 'js-yaml'
 import Navbar from '../components/Navbar'
 import CertificatePreview from '../components/CertificatePreview'
 import SignatureModal from '../components/SignatureModal'
-import { generatePDF } from '../utils/pdfGenerator'
+import { generatePDF } from '../utils/pdfGenerator.tsx'
 import { CertificateData } from '../types'
 import { saveWork, updateWork, getWorkById } from '../utils/localStorage'
+import { PageChanger } from '../components/PageChanger'
 
 // Generate default signature
 const generateDefaultSignature = (name: string): string => {
   const canvas = document.createElement('canvas')
   canvas.width = 400
-  canvas.height = 100
+  canvas.height = 60
   const ctx = canvas.getContext('2d')
   if (ctx) {
     ctx.fillStyle = 'white'
@@ -36,6 +37,8 @@ company:
   address: "Tech Tower, Sector 62, Noida 201301"
   email: "contact@piedpiper.com"
   phone: "+91 120-4567890"
+
+themeColor: "#dc2626"  # Theme color for borders and logo (hex color code)
 
 date: "November 3, 2025"
 
@@ -61,10 +64,14 @@ project:
 tasks:
   heading: "Key responsibilities included:"
   items:
-    - "Designed and implemented responsive UI components"
-    - "Built server-side rendered pages and API routes"
-    - "Integrated RESTful APIs for product management"
-    - "Collaborated with the team on code reviews and testing"
+    - number: "1."
+      text: "Designed and implemented responsive UI components"
+    - number: "2."
+      text: "Built server-side rendered pages and API routes"
+    - number: "3."
+      text: "Integrated RESTful APIs for product management"
+    - number: "4."
+      text: "Collaborated with the team on code reviews and testing"
 
 techStack:
   heading: "Tech Stack used"
@@ -102,6 +109,7 @@ function Editor() {
   const [currentWorkId, setCurrentWorkId] = useState<string | null>(workId)
   const [certificateName, setCertificateName] = useState('')
   const [showSaveDialog, setShowSaveDialog] = useState(false)
+  const [showMobileWarning, setShowMobileWarning] = useState(false)
 
   useEffect(() => {
     if (workId) {
@@ -113,6 +121,16 @@ function Editor() {
       }
     }
   }, [workId])
+
+  useEffect(() => {
+    // Check if user is on mobile/tablet and hasn't seen the warning
+    const hasSeenWarning = sessionStorage.getItem('mobileWarningShown')
+    const screenWidth = window.innerWidth
+
+    if (!hasSeenWarning && screenWidth < 1024) {
+      setShowMobileWarning(true)
+    }
+  }, [])
 
   useEffect(() => {
     parseYaml(yamlContent)
@@ -177,136 +195,167 @@ function Editor() {
     }
   }
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
-      <Navbar />
+  const handleCloseMobileWarning = () => {
+    sessionStorage.setItem('mobileWarningShown', 'true')
+    setShowMobileWarning(false)
+  }
 
-      <div className="max-w-[1800px] mx-auto p-4">
-        <div className="bg-white dark:bg-neutral-800 rounded overflow-hidden shadow-2xl">
-          <div className="bg-red-600 text-white px-6 py-5 flex flex-wrap justify-between items-center gap-4">
-            <h2 className="text-2xl font-bold">Certificate Editor</h2>
-            <div className="flex gap-4 flex-wrap items-center">
-              {/* Toggle Switch */}
-              <div className="flex items-center gap-3">
-                <span className="text-sm font-medium">Editor</span>
-                <button
-                  onClick={() => setShowEditor(!showEditor)}
-                  className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${showEditor ? 'bg-green-500' : 'bg-white/30'
-                    }`}
-                >
-                  <span
-                    className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${showEditor ? 'translate-x-6' : 'translate-x-1'
+  return (
+    <PageChanger>
+      <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
+        <Navbar />
+
+        <div className="max-w-[1800px] mx-auto p-4">
+          <div className="bg-white dark:bg-neutral-800 rounded overflow-hidden shadow-2xl">
+            <div className="bg-red-600 text-white px-6 py-5 flex flex-wrap justify-between items-center gap-4">
+              <h2 className="text-2xl font-bold">Certificate Editor</h2>
+              <div className="flex gap-4 flex-wrap items-center">
+                {/* Toggle Switch */}
+                <div className="flex items-center gap-3">
+                  <span className="text-sm font-medium">Editor</span>
+                  <button
+                    onClick={() => setShowEditor(!showEditor)}
+                    className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${showEditor ? 'bg-green-500' : 'bg-white/30'
                       }`}
-                  />
+                  >
+                    <span
+                      className={`inline-block h-5 w-5 transform rounded-full bg-white transition-transform ${showEditor ? 'translate-x-6' : 'translate-x-1'
+                        }`}
+                    />
+                  </button>
+                </div>
+                <button
+                  className="px-4 py-2.5 bg-white text-red-600 rounded font-semibold 
+                           hover:bg-gray-100 text-sm transition-colors shadow-md"
+                  onClick={handleSave}
+                >
+                  Save
+                </button>
+                <button
+                  className="px-4 py-2.5 bg-white text-red-600 rounded font-semibold 
+                           hover:bg-gray-100 text-sm transition-colors shadow-md"
+                  onClick={() => setShowSignatureModal(true)}
+                >
+                  Add Signature
+                </button>
+                <button
+                  className="px-4 py-2.5 bg-white text-red-600 rounded font-semibold 
+                           hover:bg-gray-100 transition-colors shadow-md disabled:opacity-50 text-sm disabled:cursor-not-allowed"
+                  onClick={handleDownloadPDF}
+                  disabled={!parsedData}
+                >
+                  Download PDF
                 </button>
               </div>
-              <button
-                className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
-                           hover:bg-gray-100 transition-colors shadow-md"
-                onClick={handleSave}
-              >
-                Save
-              </button>
-              <button
-                className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
-                           hover:bg-gray-100 transition-colors shadow-md"
-                onClick={() => setShowSignatureModal(true)}
-              >
-                Add Signature
-              </button>
-              <button
-                className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
-                           hover:bg-gray-100 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
-                onClick={handleDownloadPDF}
-                disabled={!parsedData}
-              >
-                Download PDF
-              </button>
             </div>
-          </div>
 
-          {error && (
-            <div className="bg-red-900/50 border-l-4 border-red-500 text-red-200 px-5 py-3 mx-5 my-3 rounded">
-              {error}
-            </div>
-          )}
-
-          <div className={`grid ${showEditor ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'} min-h-[calc(100vh-140px)]`}>
-            {showEditor && (
-              <div className="border-r border-gray-200 dark:border-neutral-700 flex flex-col lg:col-span-1">
-                <div className="bg-gray-100 dark:bg-neutral-700 px-5 py-4 border-b border-gray-200 dark:border-neutral-600 font-bold text-gray-900 dark:text-white">
-                  YAML Editor
-                </div>
-                <div className="flex-1 p-5 bg-white dark:bg-neutral-800">
-                  <textarea
-                    value={yamlContent}
-                    onChange={handleYamlChange}
-                    spellCheck={false}
-                    className="w-full h-full min-h-[500px] font-mono text-sm bg-gray-50 dark:bg-neutral-900 
-                               text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-neutral-700 
-                               rounded p-4 focus:outline-none focus:ring-2 focus:ring-red-500 resize-y"
-                  />
-                </div>
+            {error && (
+              <div className="bg-red-900/50 border-l-4 border-red-500 text-red-200 px-5 py-3 mx-5 my-3 rounded">
+                {error}
               </div>
             )}
 
-            <div className={`flex flex-col ${showEditor ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
-              <div className="bg-gray-100 dark:bg-neutral-700 px-5 py-4 border-b border-gray-200 dark:border-neutral-600 font-bold text-gray-900 dark:text-white">
-                Preview
-              </div>
-              <div className="flex-1 p-5 bg-gray-100 dark:bg-neutral-900 overflow-auto flex justify-center items-start">
-                {parsedData && <CertificatePreview data={parsedData} />}
+            <div className={`grid ${showEditor ? 'grid-cols-1 lg:grid-cols-3' : 'grid-cols-1'} min-h-[calc(100vh-140px)]`}>
+              {showEditor && (
+                <div className="border-r border-gray-200 dark:border-neutral-700 flex flex-col lg:col-span-1">
+                  <div className="bg-gray-100 dark:bg-neutral-700 px-5 py-4 border-b border-gray-200 dark:border-neutral-600 font-bold text-gray-900 dark:text-white">
+                    YAML Editor
+                  </div>
+                  <div className="flex-1 p-5 bg-white dark:bg-neutral-800">
+                    <textarea
+                      value={yamlContent}
+                      onChange={handleYamlChange}
+                      spellCheck={false}
+                      className="w-full h-full min-h-[500px] font-mono text-sm bg-gray-50 dark:bg-neutral-900 
+                               text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-neutral-700 
+                               rounded p-4 focus:outline-none focus:ring-2 focus:ring-red-500 resize-y"
+                    />
+                  </div>
+                </div>
+              )}
+
+              <div className={`flex flex-col ${showEditor ? 'lg:col-span-2' : 'lg:col-span-3'}`}>
+                <div className="bg-gray-100 dark:bg-neutral-700 px-5 py-4 border-b border-gray-200 dark:border-neutral-600 font-bold text-gray-900 dark:text-white">
+                  Preview
+                </div>
+                <div className="flex-1 p-5 bg-gray-100 dark:bg-neutral-900 overflow-auto">
+                  {parsedData && <CertificatePreview data={parsedData} />}
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {showSignatureModal && (
-        <SignatureModal
-          onSave={handleSignatureSave}
-          onClose={() => setShowSignatureModal(false)}
-          signatoryName={parsedData?.signatory?.name || ''}
-        />
-      )}
+        {showSignatureModal && (
+          <SignatureModal
+            onSave={handleSignatureSave}
+            onClose={() => setShowSignatureModal(false)}
+            signatoryName={parsedData?.signatory?.name || ''}
+          />
+        )}
 
-      {showSaveDialog && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-neutral-800 rounded p-6 max-w-md w-full">
-            <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
-              {currentWorkId ? 'Update Certificate' : 'Save Certificate'}
-            </h2>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
-              Enter a name for your certificate
-            </p>
-            <input
-              type="text"
-              value={certificateName}
-              onChange={(e) => setCertificateName(e.target.value)}
-              placeholder="Enter certificate name"
-              className="w-full px-4 py-2 border border-gray-300 dark:border-neutral-600 rounded mb-4 
+        {showSaveDialog && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-neutral-800 rounded p-6 max-w-md w-full">
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                {currentWorkId ? 'Update Certificate' : 'Save Certificate'}
+              </h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">
+                Enter a name for your certificate
+              </p>
+              <input
+                type="text"
+                value={certificateName}
+                onChange={(e) => setCertificateName(e.target.value)}
+                placeholder="Enter certificate name"
+                className="w-full px-4 py-2 border border-gray-300 dark:border-neutral-600 rounded mb-4 
                          bg-white dark:bg-neutral-900 text-gray-900 dark:text-white"
-              autoFocus
-            />
-            <div className="flex gap-3 justify-end">
-              <button
-                className="px-5 py-2 bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-gray-300 
+                autoFocus
+              />
+              <div className="flex gap-3 justify-end">
+                <button
+                  className="px-5 py-2 bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-gray-300 
                            rounded font-semibold hover:bg-gray-300 dark:hover:bg-neutral-600 transition-colors"
-                onClick={() => setShowSaveDialog(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="px-5 py-2 bg-red-600 text-white rounded font-semibold hover:bg-red-700 transition-colors"
-                onClick={handleSaveConfirm}
-              >
-                Save
-              </button>
+                  onClick={() => setShowSaveDialog(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="px-5 py-2 bg-red-600 text-white rounded font-semibold hover:bg-red-700 transition-colors"
+                  onClick={handleSaveConfirm}
+                >
+                  Save
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+
+        {showMobileWarning && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-neutral-800 rounded-lg p-6 max-w-lg w-full">
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                Mobile/Tablet Detected
+              </h2>
+              <p className="text-base text-gray-700 dark:text-gray-300 mb-4 ">
+               <span className="font-bold text-black dark:text-white italic"> Looks like you're not using a laptop.</span> <br/> For the best experience and ease of use, we recommend using a laptop device.
+              </p>
+              <p className="text-base text-gray-700 dark:text-gray-300 mb-10">
+                Since you're on a mobile/tablet, we recommend <strong>enabling Desktop Mode</strong> in your browser for a better experience.
+              </p>
+              <div className="flex justify-end">
+                <button
+                  className="px-6 py-3 bg-red-600 text-white rounded font-semibold hover:bg-red-700 transition-colors"
+                  onClick={handleCloseMobileWarning}
+                >
+                  I Understand
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </PageChanger>
   )
 }
 
