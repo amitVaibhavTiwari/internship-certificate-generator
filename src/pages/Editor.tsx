@@ -38,6 +38,8 @@ company:
   email: "contact@piedpiper.com"
   phone: "+91 120-4567890"
 
+themeColor: "#dc2626"  # Theme color for borders and logo (hex color code)
+
 date: "November 3, 2025"
 
 certificate:

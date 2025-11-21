@@ -6,6 +6,7 @@ export interface CertificateData {
     email: string
     phone: string
   }
+  themeColor?: string
   date: string
   certificate: {
     title: string
