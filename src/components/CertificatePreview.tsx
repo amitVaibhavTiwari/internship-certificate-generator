@@ -2,9 +2,10 @@ import { CertificateData } from '../types'
 
 interface CertificatePreviewProps {
   data: CertificateData
+  isPdfMode?: boolean
 }
 
-function CertificatePreview({ data }: CertificatePreviewProps) {
+function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps) {
   return (
     // <div
     //   id="certificate-preview"
@@ -12,14 +13,14 @@ function CertificatePreview({ data }: CertificatePreviewProps) {
     //   style={{ fontFamily: 'Times New Roman, serif' }}
     // >
     <div
-  id="certificate-preview"
-  className="bg-white shadow-2xl relative"
-  style={{
-    width: "794px",
-    minHeight: "1123px",
-    fontFamily: "Times New Roman, serif"
-  }}
->
+      id="certificate-preview"
+      className="bg-white shadow-2xl relative"
+      style={{
+        width: "794px",
+        minHeight: "1123px",
+        fontFamily: "Times New Roman, serif"
+      }}
+    >
       {/* Main Content Area with Padding */}
       <div className="px-16 pt-12 pb-20">
         {/* Header with Logo and Contact Info */}
@@ -111,7 +112,8 @@ function CertificatePreview({ data }: CertificatePreviewProps) {
             <img
               src={data.signatory.signature}
               alt="Signature"
-              className="h-12 mb-1 max-w-[200px]"
+              className="h-12 max-w-[250px] block"
+              style={{ marginBottom: isPdfMode ? '-17px' : '-6px' }}
             />
           )}
           <p className="text-black text-sm font-normal">{data.signatory.name}</p>

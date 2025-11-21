@@ -4,7 +4,7 @@ import yaml from 'js-yaml'
 import Navbar from '../components/Navbar'
 import CertificatePreview from '../components/CertificatePreview'
 import SignatureModal from '../components/SignatureModal'
-import { generatePDF } from '../utils/pdfGenerator'
+import { generatePDF } from '../utils/pdfGenerator.tsx'
 import { CertificateData } from '../types'
 import { saveWork, updateWork, getWorkById } from '../utils/localStorage'
 
@@ -12,7 +12,7 @@ import { saveWork, updateWork, getWorkById } from '../utils/localStorage'
 const generateDefaultSignature = (name: string): string => {
   const canvas = document.createElement('canvas')
   canvas.width = 400
-  canvas.height = 100
+  canvas.height = 60
   const ctx = canvas.getContext('2d')
   if (ctx) {
     ctx.fillStyle = 'white'
