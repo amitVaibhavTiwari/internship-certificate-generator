@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { Template } from '../types'
+import { PageChanger } from '../components/PageChanger'
 
 function Templates() {
   const navigate = useNavigate()
@@ -14,6 +15,7 @@ function Templates() {
   ]
 
   return (
+    <PageChanger>
     <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
       <Navbar />
       <div className="max-w-6xl mx-auto px-4 py-12">
@@ -45,6 +47,7 @@ function Templates() {
         </div>
       </div>
     </div>
+    </PageChanger>
   )
 }
 

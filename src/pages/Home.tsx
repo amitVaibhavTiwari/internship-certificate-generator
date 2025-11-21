@@ -1,11 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import FAQ from '../components/FAQ'
+import { PageChanger } from '../components/PageChanger'
 
 function Home() {
     const navigate = useNavigate()
 
     return (
+        <PageChanger>
         <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
             <Navbar />
 
@@ -85,6 +87,7 @@ function Home() {
 
 
         </div>
+        </PageChanger>
     )
 }
 

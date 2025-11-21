@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import { getSavedWorks, deleteWork, SavedWork } from '../utils/localStorage'
+import { PageChanger } from '../components/PageChanger'
 
 function MyWork() {
   const navigate = useNavigate()
@@ -29,6 +30,7 @@ function MyWork() {
   }
 
   return (
+    <PageChanger>
     <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
       <Navbar />
       
@@ -109,6 +111,7 @@ function MyWork() {
         )}
       </div>
     </div>
+    </PageChanger>
   )
 }
 
