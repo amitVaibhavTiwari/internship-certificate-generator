@@ -2,8 +2,6 @@
 
 A simple web application to create professional internship certificates with ease. Customize content using YAML, add digital signatures, and download as PDF.
 
-![Certificate Preview](./public/template_preview/template_1.png)
-
 ## Features
 
 - **Easy Customization** - Edit certificate content using a simple YAML format
