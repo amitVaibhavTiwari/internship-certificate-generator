@@ -16,7 +16,6 @@ function Templates() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
       <Navbar />
-      
       <div className="max-w-6xl mx-auto px-4 py-12">
         <h1 className="text-gray-900 dark:text-white text-center text-4xl md:text-5xl font-bold mb-8">
           Choose a Template
@@ -31,8 +30,8 @@ function Templates() {
               onClick={() => navigate(`/editor/${template.id}`)}
             >
               <div className="w-full h-64 bg-gray-100 dark:bg-neutral-700 flex items-center justify-center overflow-hidden">
-                <img 
-                  src="/template_preview/template_1.png" 
+                <img
+                  src="./template_preview/template_1.png"
                   alt={template.name}
                   className="w-full h-full object-contain"
                 />

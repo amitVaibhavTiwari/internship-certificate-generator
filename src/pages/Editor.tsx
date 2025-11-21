@@ -61,10 +61,14 @@ project:
 tasks:
   heading: "Key responsibilities included:"
   items:
-    - "Designed and implemented responsive UI components"
-    - "Built server-side rendered pages and API routes"
-    - "Integrated RESTful APIs for product management"
-    - "Collaborated with the team on code reviews and testing"
+    - number: "1."
+      text: "Designed and implemented responsive UI components"
+    - number: "2."
+      text: "Built server-side rendered pages and API routes"
+    - number: "3."
+      text: "Integrated RESTful APIs for product management"
+    - number: "4."
+      text: "Collaborated with the team on code reviews and testing"
 
 techStack:
   heading: "Tech Stack used"

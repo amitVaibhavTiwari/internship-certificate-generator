@@ -27,7 +27,10 @@ export interface CertificateData {
   }
   tasks: {
     heading: string
-    items: string[]
+    items: Array<{
+      number: string
+      text: string
+    }>
   }
   techStack: {
     heading: string

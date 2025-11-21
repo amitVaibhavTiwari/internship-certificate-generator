@@ -6,15 +6,24 @@ interface CertificatePreviewProps {
 
 function CertificatePreview({ data }: CertificatePreviewProps) {
   return (
+    // <div
+    //   id="certificate-preview"
+    //   className="bg-white w-[210mm] h-[297mm] shadow-2xl relative"
+    //   style={{ fontFamily: 'Times New Roman, serif' }}
+    // >
     <div
-      id="certificate-preview"
-      className="bg-white w-[210mm] h-[297mm] shadow-2xl relative"
-      style={{ fontFamily: 'Times New Roman, serif' }}
-    >
+  id="certificate-preview"
+  className="bg-white shadow-2xl relative"
+  style={{
+    width: "794px",
+    minHeight: "1123px",
+    fontFamily: "Times New Roman, serif"
+  }}
+>
       {/* Main Content Area with Padding */}
       <div className="px-16 pt-12 pb-20">
         {/* Header with Logo and Contact Info */}
-        <div className="flex justify-between items-start mb-8">
+        <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-3">
             {data.company.logo ? (
               <img src={data.company.logo} alt="Company Logo" className="h-16 object-contain" />
@@ -38,7 +47,7 @@ function CertificatePreview({ data }: CertificatePreviewProps) {
               </div>
             )}
           </div>
-          <div className="text-right text-xs text-black font-medium">
+          <div className="text-right text-xs text-black font-medium self-start">
             <p className="mb-1">{data.company.address}</p>
             <p className="mb-1">{data.company.email}</p>
             <p>{data.company.phone}</p>
@@ -50,10 +59,10 @@ function CertificatePreview({ data }: CertificatePreviewProps) {
 
         {/* Certificate Title */}
         <div className="mb-10">
-          <div className="border-t-2 border-b-2 border-red-600 py-2">
-            <h1 className="text-center text-black text-lg font-bold tracking-wide uppercase">
+          <div className="border-t-2 border-b-2 border-red-600">
+            <div className="text-center mt-1 text-black text-lg font-bold tracking-wide uppercase leading-[2.5rem]">
               {data.certificate.title}
-            </h1>
+            </div>
           </div>
         </div>
 
@@ -72,11 +81,14 @@ function CertificatePreview({ data }: CertificatePreviewProps) {
 
         {/* Tasks Section */}
         <p className="text-black text-sm mb-2">{data.tasks.heading}</p>
-        <ol className="list-decimal list-inside mb-5 text-black text-sm space-y-1 pl-2">
+        <div className="mb-5 text-black text-sm space-y-1 pl-2">
           {data.tasks.items.map((task, index) => (
-            <li key={index} className="leading-relaxed">{task}</li>
+            <div key={index} className="flex gap-2 leading-relaxed">
+              <span className="flex-shrink-0">{task.number}</span>
+              <span>{task.text}</span>
+            </div>
           ))}
-        </ol>
+        </div>
 
         {/* Tech Stack */}
         <p className="text-black text-sm mb-5 leading-relaxed">
