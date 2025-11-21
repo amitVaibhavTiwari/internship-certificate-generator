@@ -17,8 +17,8 @@ export async function generatePDF(data: CertificateData): Promise<void> {
     const root = createRoot(tempContainer)
     root.render(<CertificatePreview data={data} isPdfMode={true} />)
 
-    // Wait for render to complete
-    await new Promise(resolve => setTimeout(resolve, 100))
+    // Wait for render to complete and fonts to load
+    await new Promise(resolve => setTimeout(resolve, 300))
 
     const certificateElement = tempContainer.querySelector('#certificate-preview') as HTMLElement
 
@@ -27,12 +27,19 @@ export async function generatePDF(data: CertificateData): Promise<void> {
       return
     }
 
-    // Capture the certificate as canvas
+    // Set fixed dimensions for consistent PDF output
+    certificateElement.style.width = '794px'
+    certificateElement.style.minHeight = '1123px'
+
+    // Capture the certificate as canvas with higher quality
     const canvas = await html2canvas(certificateElement, {
-      scale: 2,
+      scale: 3,
       backgroundColor: '#ffffff',
       logging: false,
-      useCORS: true
+      useCORS: true,
+      allowTaint: true,
+      windowWidth: 794,
+      windowHeight: 1123
     })
 
     // Cleanup

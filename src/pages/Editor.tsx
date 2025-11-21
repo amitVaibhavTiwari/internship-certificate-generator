@@ -262,7 +262,7 @@ function Editor() {
                 <div className="bg-gray-100 dark:bg-neutral-700 px-5 py-4 border-b border-gray-200 dark:border-neutral-600 font-bold text-gray-900 dark:text-white">
                   Preview
                 </div>
-                <div className="flex-1 p-5 bg-gray-100 dark:bg-neutral-900 overflow-auto flex justify-center items-start">
+                <div className="flex-1 p-5 bg-gray-100 dark:bg-neutral-900 overflow-auto">
                   {parsedData && <CertificatePreview data={parsedData} />}
                 </div>
               </div>
