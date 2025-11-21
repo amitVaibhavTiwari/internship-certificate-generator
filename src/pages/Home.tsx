@@ -12,39 +12,39 @@ function Home() {
             {/* Hero Section */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div className="text-center">
-                    <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
+                    <h1 className="text-3xl md:text-6xl font-bold mb-6 text-gray-900 dark:text-white">
                         Internship Certificate Generator
                     </h1>
-                    <p className="text-xl md:text-2xl mb-4 text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
+                    <p className="text-xl md:text-2xl mb-5 text-gray-700 dark:text-gray-300 max-w-3xl mx-auto">
                         Create professional internship certificates with ease
                     </p>
                     <p className="text-base md:text-lg mb-8 text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-                        Customize using YAML, add digital signatures, and download as PDF
+                      Choose a Template,  Customize, add digital signatures, and download as PDF
                     </p>
 
                     {/* Laptop Recommendation */}
                     <div className="mb-8">
-                        <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 flex items-center justify-center gap-2">
-                            <span>Using a laptop with chromium based browser (Chrome, Brave etc.) is highly recommended for the best experience</span>
+                        <p className="text-sm md:text-base max-w-[600px] mx-auto text-gray-600 dark:text-gray-400 mb-4 flex items-center justify-center gap-2">
+                            <span>Mobiles and Tablets can also be used but using a <span className='font-black italic text-black dark:text-white'>laptop</span> with chromium based browser (Chrome, Brave etc.) is highly recommended for the best experience</span>
                         </p>
                     </div>
 
                     {/* CTA Buttons */}
-                    <div className="flex gap-4 justify-center flex-wrap">
+                    <div className="flex gap-4 mt-16 justify-center flex-wrap">
                         <button
                             className="bg-red-600 hover:bg-red-700 text-white 
-                                     px-10 py-4 text-xl font-bold rounded transition-colors shadow-lg"
+                                     px-10 py-3 text-base font-bold rounded transition-colors shadow-lg"
                             onClick={() => navigate('/templates')}
                         >
                             Get Started
                         </button>
                         <button
                             className="bg-gray-200 dark:bg-neutral-800 hover:bg-gray-300 dark:hover:bg-neutral-700 
-                                     text-gray-900 dark:text-white px-10 py-4 text-xl font-bold rounded 
+                                     text-gray-900 dark:text-white px-10 py-3 text-base font-bold rounded 
                                      transition-colors shadow-lg border-2 border-gray-300 dark:border-neutral-700"
                             onClick={() => navigate('/my-work')}
                         >
-                            My Work
+                            My Saved Work
                         </button>
                     </div>
                 </div>
