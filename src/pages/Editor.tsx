@@ -109,6 +109,7 @@ function Editor() {
   const [currentWorkId, setCurrentWorkId] = useState<string | null>(workId)
   const [certificateName, setCertificateName] = useState('')
   const [showSaveDialog, setShowSaveDialog] = useState(false)
+  const [showMobileWarning, setShowMobileWarning] = useState(false)
 
   useEffect(() => {
     if (workId) {
@@ -120,6 +121,16 @@ function Editor() {
       }
     }
   }, [workId])
+
+  useEffect(() => {
+    // Check if user is on mobile/tablet and hasn't seen the warning
+    const hasSeenWarning = sessionStorage.getItem('mobileWarningShown')
+    const screenWidth = window.innerWidth
+
+    if (!hasSeenWarning && screenWidth < 1024) {
+      setShowMobileWarning(true)
+    }
+  }, [])
 
   useEffect(() => {
     parseYaml(yamlContent)
@@ -184,6 +195,11 @@ function Editor() {
     }
   }
 
+  const handleCloseMobileWarning = () => {
+    sessionStorage.setItem('mobileWarningShown', 'true')
+    setShowMobileWarning(false)
+  }
+
   return (
     <PageChanger>
       <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
@@ -209,22 +225,22 @@ function Editor() {
                   </button>
                 </div>
                 <button
-                  className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
-                           hover:bg-gray-100 transition-colors shadow-md"
+                  className="px-4 py-2.5 bg-white text-red-600 rounded font-semibold 
+                           hover:bg-gray-100 text-sm transition-colors shadow-md"
                   onClick={handleSave}
                 >
                   Save
                 </button>
                 <button
-                  className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
-                           hover:bg-gray-100 transition-colors shadow-md"
+                  className="px-4 py-2.5 bg-white text-red-600 rounded font-semibold 
+                           hover:bg-gray-100 text-sm transition-colors shadow-md"
                   onClick={() => setShowSignatureModal(true)}
                 >
                   Add Signature
                 </button>
                 <button
-                  className="px-6 py-2.5 bg-white text-red-600 rounded font-semibold 
-                           hover:bg-gray-100 transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-4 py-2.5 bg-white text-red-600 rounded font-semibold 
+                           hover:bg-gray-100 transition-colors shadow-md disabled:opacity-50 text-sm disabled:cursor-not-allowed"
                   onClick={handleDownloadPDF}
                   disabled={!parsedData}
                 >
@@ -309,6 +325,30 @@ function Editor() {
                   onClick={handleSaveConfirm}
                 >
                   Save
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {showMobileWarning && (
+          <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4">
+            <div className="bg-white dark:bg-neutral-800 rounded-lg p-6 max-w-lg w-full">
+              <h2 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                Mobile/Tablet Detected
+              </h2>
+              <p className="text-base text-gray-700 dark:text-gray-300 mb-4 ">
+               <span className="font-bold text-black dark:text-white italic"> Looks like you're not using a laptop.</span> <br/> For the best experience and ease of use, we recommend using a laptop device.
+              </p>
+              <p className="text-base text-gray-700 dark:text-gray-300 mb-10">
+                Since you're on a mobile/tablet, we recommend <strong>enabling Desktop Mode</strong> in your browser for a better experience.
+              </p>
+              <div className="flex justify-end">
+                <button
+                  className="px-6 py-3 bg-red-600 text-white rounded font-semibold hover:bg-red-700 transition-colors"
+                  onClick={handleCloseMobileWarning}
+                >
+                  I Understand
                 </button>
               </div>
             </div>
