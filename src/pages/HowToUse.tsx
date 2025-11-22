@@ -98,6 +98,23 @@ function HowToUse() {
                                 </div>
                                 <div className="flex-1">
                                     <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                                        Customize Theme Color
+                                    </h2>
+                                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                                        Use the "Theme Color" picker in the toolbar to change the certificate's border and logo color. Click on the color box to choose any color you want - perfect for matching your company's brand!
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Step 4 */}
+                        <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
+                            <div className="flex items-start gap-4">
+                                <div className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                                    4
+                                </div>
+                                <div className="flex-1">
+                                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
                                         Add Signature
                                     </h2>
                                     <p className="text-gray-600 dark:text-gray-400 mb-4">
@@ -112,11 +129,11 @@ function HowToUse() {
                             </div>
                         </div>
 
-                        {/* Step 4 */}
+                        {/* Step 5 */}
                         <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
                             <div className="flex items-start gap-4">
                                 <div className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
-                                    4
+                                    5
                                 </div>
                                 <div className="flex-1">
                                     <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
@@ -129,11 +146,28 @@ function HowToUse() {
                             </div>
                         </div>
 
-                        {/* Step 5 */}
+                        {/* Step 6 */}
                         <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
                             <div className="flex items-start gap-4">
                                 <div className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
-                                    5
+                                    6
+                                </div>
+                                <div className="flex-1">
+                                    <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                                        Preview Your Certificate
+                                    </h2>
+                                    <p className="text-gray-600 dark:text-gray-400 mb-4">
+                                        The preview panel on the right shows your certificate in real-time as you make changes. Toggle the editor on/off using the switch to see a full preview.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Step 7 */}
+                        <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
+                            <div className="flex items-start gap-4">
+                                <div className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
+                                    7
                                 </div>
                                 <div className="flex-1">
                                     <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
@@ -146,11 +180,11 @@ function HowToUse() {
                             </div>
                         </div>
 
-                        {/* Step 6 */}
+                        {/* Step 8 */}
                         <div className="bg-white dark:bg-neutral-800 rounded-lg shadow-lg p-8">
                             <div className="flex items-start gap-4">
                                 <div className="flex-shrink-0 w-8 h-8 bg-red-600 text-white rounded-full flex items-center justify-center text-lg font-bold">
-                                    6
+                                    8
                                 </div>
                                 <div className="flex-1">
                                     <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-3">

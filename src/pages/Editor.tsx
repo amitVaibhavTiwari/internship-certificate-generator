@@ -33,12 +33,12 @@ const defaultSignature = generateDefaultSignature('Ava Tyagi')
 const defaultYaml = `# Certificate Configuration
 company:
   name: "Pied Piper"
-  logo: ""  # Add company logo URL (optional)
+  logo: ""  # Add company logo URL (optional, if you need a custom company logo)
   address: "Tech Tower, Sector 62, Noida 201301"
   email: "contact@piedpiper.com"
   phone: "+91 120-4567890"
 
-themeColor: "#dc2626"  # Theme color for borders and logo (hex color code)
+themeColor: "#f00000"  # Theme color for borders and logo 
 
 date: "November 3, 2025"
 
@@ -200,6 +200,14 @@ function Editor() {
     setShowMobileWarning(false)
   }
 
+  const handleColorChange = (color: string) => {
+    const updatedYaml = yamlContent.replace(
+      /themeColor:\s*"[^"]*"/,
+      `themeColor: "${color}"`
+    )
+    setYamlContent(updatedYaml)
+  }
+
   return (
     <PageChanger>
       <div className="min-h-screen bg-gray-50 dark:bg-neutral-900">
@@ -223,6 +231,19 @@ function Editor() {
                         }`}
                     />
                   </button>
+                </div>
+                {/* Color Picker */}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">Theme Color</span>
+                  <span className="h-7 w-7 rounded-full overflow-hidden border-4 border-white">
+                  <input
+                    type="color"
+                    value={parsedData?.themeColor || '#dc2626'}
+                    onChange={(e) => handleColorChange(e.target.value)}
+                    className="w-12 h-12 -mt-2 -ml-1 rounded cursor-pointer border-2 border-white"
+                    title="Select theme color"
+                    />
+                    </span>
                 </div>
                 <button
                   className="px-4 py-2.5 bg-white text-red-600 rounded font-semibold 

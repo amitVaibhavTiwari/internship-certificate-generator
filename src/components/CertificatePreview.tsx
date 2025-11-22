@@ -6,8 +6,8 @@ interface CertificatePreviewProps {
 }
 
 function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps) {
-  const themeColor = data.themeColor || '#dc2626' // Default to red-600
-  
+  const themeColor = data.themeColor || '#dc2626' 
+
   return (
     // <div
     //   id="certificate-preview"
@@ -27,11 +27,11 @@ function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps
       <div className="px-16 pt-12 pb-20">
         {/* Header with Logo and Contact Info */}
         <div className="flex justify-between items-center mb-8">
-          <div className="flex items-end gap-3">
+          <div className="flex items-end gap-2">
             {data.company.logo ? (
               <img src={data.company.logo} alt="Company Logo" className="h-16 object-contain" />
             ) : (
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-1">
                 <div className="p-2 rounded" style={{ backgroundColor: themeColor }}>
                   <div className="flex flex-col gap-1">
                     <div className="flex gap-1">
@@ -45,9 +45,14 @@ function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps
                   </div>
                 </div>
                 <div>
-                  <span 
-                    style={{ marginTop: isPdfMode ? '-17px' : '14px' }}
-                  className="text-3xl font-bold text-black tracking-wide block leading-tight">{data.company.name}</span>
+                  <span
+                    style={{
+                      marginTop: isPdfMode ? '-5px' : '14px',
+                      fontFamily: '"Montserrat", "Arial Black", sans-serif',
+                      fontWeight: isPdfMode ? 900 : 800,
+                      letterSpacing: '0.01em'
+                    }}
+                    className="text-[1.4rem] text-black block uppercase">{data.company.name}</span>
                 </div>
               </div>
             )}
@@ -67,7 +72,7 @@ function CertificatePreview({ data, isPdfMode = false }: CertificatePreviewProps
           <div className="border-t-2 border-b-2" style={{ borderColor: themeColor }}>
             <div
               style={{ margin: isPdfMode ? '0px 0 18px 0' : '8px 0 8px 0' }}
-            className="text-center text-black text-lg font-bold tracking-wide uppercase">
+              className="text-center text-black text-lg font-bold tracking-wide uppercase">
               {data.certificate.title}
             </div>
           </div>
